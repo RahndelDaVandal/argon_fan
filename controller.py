@@ -3,14 +3,25 @@
 from abc import ABC, abstractmethod
 
 class Controller(ABC):
-    @abstractmethod
-    def run(self, feedback:float(), setpoint:float()):
-        pass
+	@abstractmethod
+	def __init__(self, *kwargs):
+		pass
 
+	@abstractmethod
+	def run(self, feedback:float(), setpoint:float()):
+		pass
+		
 class PID(Controller):
-    def run(self, feedback:float(), setpoint:float()):
-        pass
-
+	def __init__(self, *kwargs):
+		pass
+	
+	def run(self, feedback:float(), setpoint:float()):
+		pass
+		
 class Bang_Bang(Controller):
-    def run(self, feedback:float(), setpoint:float()):
-        pass
+	def __init__(self, *kwargs):
+		pass
+		
+	def run(self, feedback:float(), setpoint:float()):
+		pass
+

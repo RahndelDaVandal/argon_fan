@@ -1,4 +1,5 @@
 # interface.py
+from controller import Controller
 
 class Interface:
     controller: Controller
