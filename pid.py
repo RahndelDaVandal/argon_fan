@@ -1,29 +1,28 @@
 import time
 
-kp: float()
-ki: float()
-kd: float()
+kp: float() #
+ki: float() #
+kd: float() #
 input: float()
 output: float()
-setpoint: float()
-start_time = time.monotonic()
-err_sum: float()
-last_err: float()
-last_time: time.monotonic()
-sample_time = 1 #Sec
-last_input: float()
-i_term : float()
-out_max : float()
-out_min : float()
-in_auto = False
+setpoint: float() #
+start_time = time.monotonic() #
+#err_sum: float()
+#last_err: float()
+last_time: time.monotonic() #
+sample_time = 1 #Sec #
+last_input: float() #
+i_term : float() #
+out_max : float() #
+out_min : float() #
+in_auto = False #
 
-MANUAL = 0
-AUTOMATIC = 1
+MANUAL = 0 #
+AUTOMATIC = 1 #
 
-DIRECT = 0
-REVERSE = 1
-control_direction = DIRECT
-
+DIRECT = 0 #
+REVERSE = 1 #
+control_direction = DIRECT #
 
 def compute() -> None:
 	if not in_auto: return
