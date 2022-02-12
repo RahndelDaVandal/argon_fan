@@ -1,6 +1,7 @@
 # Class refactor for pid.py
 import time
 from random import randint
+import matplotlib.pyplot as plt
 
 class PID:
 	def __init__(self,
@@ -77,7 +78,12 @@ data = []
 
 print(f'Set Point = {pid.set_point}')
 
-for i in range(0,60):
+t = 0
+f = []
+o = []
+s = []
+
+for i in range(0,10):
 	input += randint(-15,1)
 	output = pid.compute(input)
 	if output == None:
@@ -85,15 +91,18 @@ for i in range(0,60):
 	new_input = input + output	
 	input = new_input
 	print(f'feedback: {input:.2f} output: {output:.2f}')
-	data.append((input, output))
+	t += 1
+    f.append(input)
+    o.append(input)
+    s.append(pid.set_point)
 	time.sleep(1)
 	
 #with open('output.txt', 'w') as outfile:
 	#outfile.write(str(data))
 
-
-
-
+#plt.plot(x,y, color='r')
+#plt.savefig('output.png')
+#plt.show()
 
 
 
