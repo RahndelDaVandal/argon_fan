@@ -88,8 +88,8 @@ for i in range(0,60):
 	data.append((input, output))
 	time.sleep(1)
 	
-with open('output.txt', 'w') as outfile:
-	outfile.write(str(data))
+#with open('output.txt', 'w') as outfile:
+	#outfile.write(str(data))
 
 
 
