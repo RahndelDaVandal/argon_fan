@@ -1,36 +1,44 @@
-from time import clock, sleep
+import time
 
-class PID:
-	def __init__(
-		self, kp:float(), ki:float(), kd:float()
-		):		
-			
-			self.kp = kp
-			self.ki = ki
-			self.kd = kd
-			self.output : float()
-			err_sum : float()
-			last_err : float()
-			last_time : clock()
-			
-			def compute(
-				self, input:float(), setpoint:float()
-				) -> float():
-					
-					curr_time = clock()
-					time_change = clock()
-					
-					error = setpoint - input
-					err_sum += (error * time_change)
-					d_err = (error - last_err) / time_change
-					
-					output = kp * error + ki * err_sum + kd * d_err
-					
-					last_err = error
-					last_time = curr_time
+kp: float()
+ki: float()
+kd: float()
+input: float()
+output: float()
+setpoint: float()
+start_time = time.monotonic()
+err_sum: float()
+last_err: float()
+last_time: time.monotonic()
+sample_time = 1 #Sec
+
+
+def compute() -> None:
+	now = time()
+	time_change = now - last_time
+
+	if time_change >= sample_time:
+		error = setpoint - input
+		err_sum += error
+		d_err = error - last_err
+
+		output = kp * error + ki * err_sum + kd * d_err
+
+		last_err = error
+		last_time = now
+		
+def set_tunings(kp:float(), ki:float(), kd:float()) -> None:
+	kp = kp
+	ki = float(ki * sample_time)
+	kd = float(kd / sample_time)
 	
-input : float()
-output : float()
-setpoint : float()
-start_time = clock()
+def set_sample_time(new_sample_time:int):
+	
+	if new_sample_time > 0:
+		ratio = new_sample_time / sample_time
+		
+		ki *= ratio
+		kd /= ratio
+		sample_time = new_sample_time
+
 
