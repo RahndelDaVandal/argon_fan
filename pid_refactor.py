@@ -68,22 +68,23 @@ class PID:
 
 output = 0			
 									
-pid = PID(P=1,I=.5,D=0,set_point=50, in_auto=True)
+pid = PID(P=0.25,I=1,D=0.25,set_point=50, in_auto=True, sample_time = 0.5)
 
 output = 0.0
 
 input = 50.0
 
 data = []
-
+print(f'P: {pid.P} I: {pid.I} D: {pid.D}')
 print(f'Set Point = {pid.set_point}')
 
 t = 0
+x = []
 f = []
 o = []
 s = []
 
-for i in range(0,10):
+for i in range(0,1000):
 	input += randint(-15,1)
 	output = pid.compute(input)
 	if output == None:
@@ -92,11 +93,23 @@ for i in range(0,10):
 	input = new_input
 	print(f'feedback: {input:.2f} output: {output:.2f}')
 	t += 1
-    f.append(input)
-    o.append(input)
-    s.append(pid.set_point)
-	time.sleep(1)
+	x.append(t)
+	f.append(input)
+	o.append(output)
+	s.append(pid.set_point)
+	time.sleep(pid.sample_time)
 	
+print()
+
+plt.plot(x,s,label='Set Point',color='b', linestyle='--')
+plt.plot(x,f,label='Feedback',color='r')
+plt.plot(x,o,label='Output',color='g')
+plt.title(f'P:{pid.P} I:{pid.I} D:{pid.D}')
+
+#plt.legend()
+
+plt.tight_layout()
+plt.show()
 #with open('output.txt', 'w') as outfile:
 	#outfile.write(str(data))
 
