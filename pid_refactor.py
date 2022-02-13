@@ -70,7 +70,7 @@ class PID:
 
 output = 0
 
-pid = PID(P=0.25, I=1, D=0.25, set_point=50, in_auto=True, sample_time=0.5)
+pid = PID(P=0.1, I=0.1, D=1, set_point=50, in_auto=True, sample_time=0.25)
 
 output = 0.0
 
