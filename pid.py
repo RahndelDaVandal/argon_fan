@@ -39,7 +39,7 @@ def compute() -> None:
 
 		output = kp * error + i_term - kd * d_input
 		if output > out_max: output = out_max
-		if out < out_min: output = out_min
+		if output < out_min: output = out_min
 
 		last_input = input
 		last_time = now
