@@ -2,6 +2,7 @@
 import time
 from random import randint
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class PID:
@@ -13,7 +14,7 @@ class PID:
 														out_min: float()=0,
 														out_max: float()=100,
 														sample_time: int()=1,
-														control_direction: bool()=False,
+														control_direction: bool()=True,
 														in_auto: bool()=False,
 														*kwargs):
 		self.P = P
@@ -70,43 +71,48 @@ class PID:
 
 output = 0
 
-pid = PID(P=0.1, I=0.1, D=1, set_point=50, in_auto=True, sample_time=0.25)
+pid = PID(P=.6, I=0.08, D=0.002, set_point=80, in_auto=True, sample_time=0.25)
 
 output = 0.0
 
-input = 50.0
+input = 80
 
 data = []
 print(f'P: {pid.P} I: {pid.I} D: {pid.D}')
 print(f'Set Point = {pid.set_point}')
 
 t = 0
-x = []
-f = []
-o = []
-s = []
+x = np.empty(0)
+f = np.empty(0)
+o = np.empty(0)
+s = np.empty(0)
+o_std = np.empty(0)
 
-for i in range(0, 1000):
-	input += randint(-15, 1)
+rate = -20
+
+for i in range(0, 100):
+	input += (randint(-7, 2) + rate)
 	output = pid.compute(input)
 	if output == None:
 		output = 0.0
 	new_input = input + output
 	input = new_input
-	print(f'feedback: {input:.2f} output: {output:.2f}')
 	t += 1
-	x.append(t)
-	f.append(input)
-	o.append(output)
-	s.append(pid.set_point)
+	x = np.append(t, x)
+	f = np.append(input, f)
+	o = np.append(output, o)
+	curr_o_std = np.std(o)
+	o_std = np.append(curr_o_std, o_std)
+	s = np.append(pid.set_point, s)
+	print(f'feedback: {input:.2f} output: {output:.2f} STD: {curr_o_std:.2f} DfS: {input - pid.set_point:.2f}')
 	time.sleep(pid.sample_time)
 
-print()
+print(x)
 
 plt.plot(x, s, label='Set Point', color='b', linestyle='--')
 plt.plot(x, f, label='Feedback', color='r')
 plt.plot(x, o, label='Output', color='g')
-plt.title(f'P:{pid.P} I:{pid.I} D:{pid.D}')
+plt.title(f'P:{pid.P} I:{pid.I} D:{pid.D} STD:{np.std(o):.2f}')
 
 #plt.legend()
 
