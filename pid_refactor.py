@@ -67,6 +67,8 @@ class PID:
 				return 0.0
 			else:
 				return output
+				
+	def _configure(self):
 
 
 output = 0
