@@ -63,7 +63,6 @@ class PID:
 			self.last_time = now
 
 			if output == None:
-				print("output = None")
 				return 0.0
 			else:
 				return output
